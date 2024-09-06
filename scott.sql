@@ -55,25 +55,46 @@
 --SELECT e.EMPNO, e.ENAME, e.SAL, e.COMM, NVL2(e.COMM,(e.SAL*12+e.COMM),e.SAL*12)
 --FROM EMP e 
 
-SELECT
-	e.EMPNO ,
-	e.ENAME ,
-	TRUNC(e.SAL / 21.5, 3) AS 하루급여,
-	ROUND(e.SAL / 172, 2) AS 시급
-FROM
-	EMP e;
-	
-SELECT 
-	e.EMPNO,
-	e.ENAME,
-	e.HIREDATE,
-	TO_CHAR(ADD_MONTHS(e.HIREDATE,3),'YYYY-MM-DD') AS R_JOB  
-FROM EMP e;
+--SELECT
+--	e.EMPNO ,
+--	e.ENAME ,
+--	TRUNC(e.SAL / 21.5, 3) AS 하루급여,
+--	ROUND(e.SAL / 172, 2) AS 시급
+--FROM
+--	EMP e;
+--	
+--SELECT 
+--	e.EMPNO,
+--	e.ENAME,
+--	e.HIREDATE,
+--	TO_CHAR(NEXT_DAY(ADD_MONTHS(e.HIREDATE,3),'월'),'YYYY-MM-DD') AS R_JOB  
+--FROM EMP e;
+--
+--
+--SELECT 
+--	e.EMPNO,
+--	e.ENAME,
+--	e.MGR,
+--	DECODE(SUBSTR(MGR,0,2),'75','5555','76','6666','77','7777','78','8888','79',e.MGR,NULL,'0000') AS CHG_MGR
+--FROM EMP e;
+
+--SELECT AVG(e.COMM) 
+--FROM EMP e 
+--WHERE e.DEPTNO = 30
 
 
-SELECT 
-	e.EMPNO,
-	e.ENAME,
-	e.MGR,
-	DECODE(SUBSTR(MGR,0,2),'75','5555','76','6666','77','7777','78','8888','79',e.MGR,NULL,'0000') AS CHG_MGR
-FROM EMP e;
+--
+--SELECT e.JOB, COUNT(e.JOB) 
+--FROM EMP e 
+--GROUP BY e.JOB 
+--HAVING count(e.JOB) >= 3;
+--
+--SELECT EXTRACT(YEAR FROM e.HIREDATE) || ' ' || deptno || ' ' || count(*)
+--FROM EMP e 
+--GROUP BY EXTRACT(YEAR FROM e.HIREDATE), deptno
+--ORDER BY EXTRACT(YEAR FROM e.HIREDATE), deptno;
+--
+
+SELECT e.DEPTNO, d.DNAME, AVG(e.SAL) AS 평균급여, MAX(e.SAL) AS 최대급여, MIN(e.SAL) AS 최소급여, COUNT(*) 
+FROM EMP e JOIN DEPT d ON e.DEPTNO = d.DEPTNO 
+GROUP BY d.DNAME 
